@@ -1,3 +1,11 @@
+-------------------
+steps:
+1. clone repository
+2. run: npm install webpack webpack-cli webpack-dev-server --save-dev
+3. run: npm run dev
+4. it will give you an option to view local or via network
+
+--------------------
 <<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
