@@ -1,0 +1,115 @@
+/* Background */
+.login-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 50%, #0b0b0b, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+/* Card */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 0 25px rgba(0, 255, 153, 0.08);
+  animation: floatIn 1.2s ease;
+}
+
+/* Title */
+.login-card h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #00ff99;
+}
+
+/* Labels */
+.login-card label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+
+/* Inputs */
+.login-card input {
+  margin-top: 0.3rem;
+  padding: 0.6rem 0.8rem;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.login-card input:focus {
+  border-color: #00ff99;
+  box-shadow: 0 0 8px rgba(0, 255, 153, 0.3);
+}
+
+/* Error Message */
+.error-text {
+  color: #ff4d4d;
+  font-size: 0.8rem;
+  margin-top: -0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Submit Button */
+.login-btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: #00ff99;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 0.8rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.login-btn:hover {
+  background: #00e58a;
+  transform: translateY(-2px);
+}
+
+/* Footer Text */
+.login-footer {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.login-footer a {
+  color: #00ff99;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.login-footer a:hover {
+  color: #00e58a;
+}
+
+/* Entrance Animation */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

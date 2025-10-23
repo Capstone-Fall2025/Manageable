@@ -55,7 +55,7 @@ export default function Workspace () {
                         leading-relaxed
                         "
                     value={body}
-                    onChnage={(e)=> setBody(e.target.value)}
+                    onChange={(e)=> setBody(e.target.value)}
                 />
                 <div className="
                         flex

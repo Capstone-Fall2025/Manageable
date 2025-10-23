@@ -1,0 +1,85 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr; /* left-right ratio */
+  gap: 1.5rem;
+  width: 100%;
+  padding: 2rem;
+  align-items: start;
+}
+
+/* Career card  */
+.career {
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+  border-radius: 20px;
+  height: 750px; 
+  width:350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.career:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(0, 255, 153, 0.2);
+}
+
+/* Right column container */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 550px; 
+}
+
+
+.school,
+.hobby {
+  flex: 1;
+  background: #111; 
+  border: 1px solid #1f1f1f;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.school:hover,
+.hobby:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.25);
+}
+
+/* Headings inside cards */
+.card h2 {
+  z-index: 2;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career {
+    height: 400px;
+  }
+
+  .right-column {
+    height: auto;
+  }
+
+  .school,
+  .hobby {
+    height: 200px;
+  }
+}
