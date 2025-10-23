@@ -1,0 +1,16 @@
+.greeting {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.greeting-title {
+    font-size: 2rem;
+    font-weight: 500;
+    color: white;
+}
+
+.greeting-sub {
+    color: #c4adad;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+}

@@ -1,39 +1,23 @@
 "use client";
 import React, {useEffect } from "react";
 import { useRouter } from "next/navigation";
+import "./styles/Openanimation.css";
 
 export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(()=> { 
-      router.push("/workspace");
+      router.push("/signin");
     },2500);
 
     return () => clearTimeout(timer);
   },[router]);
 
   return (
-    <main 
-      className="
-        min-h-screen 
-        flex flex-col 
-        justify-center 
-        bg-black 
-        text-white">
-      <h1 
-        className="
-        text-6xl 
-        font-bold 
-        mb-3">
-          Manageable
-      </h1>
-      <p 
-        className="
-        text-gray-400 
-        text-lg">
-          Focus.Revise.Remember
-      </p>
-    </main>
+    <div className="entry">
+      <h1 className="logo">Manageable</h1>
+      <p className="subtitle">Focus.Simplified</p>
+    </div>
   );
 }
