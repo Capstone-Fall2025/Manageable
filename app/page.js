@@ -1,6 +1,7 @@
 "use client";
 import React, {useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default function HomePage() {
   const router = useRouter();
@@ -12,6 +13,9 @@ export default function HomePage() {
 
     return () => clearTimeout(timer);
   },[router]);
+
+  // Redirect root (/) to the login route
+  redirect("/login");
 
   return (
     <main 
