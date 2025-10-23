@@ -1,8 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import "../styles/CardGrid.css";
 
+
+ 
 export default function CardGrid() {
+    const router = useRouter ();
+
+  function schoolPage() {
+    router.push("/school");
+    }
+    
   return (
     <section className="card-grid">
       <div className="card career">
@@ -11,7 +20,7 @@ export default function CardGrid() {
 
       <div className="right-column">
         <div className="card school">
-          <h2>School</h2>
+          <button className="school-btn" onClick={schoolPage} >School</button>
         </div>
 
         <div className="card hobby">
