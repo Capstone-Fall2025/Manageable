@@ -38,6 +38,7 @@
 
 
 .school,
+.revision-card,
 .hobby {
   flex: 1;
   background: #111; 
@@ -52,6 +53,7 @@
 }
 
 .school:hover,
+.revision-card:hover,
 .hobby:hover {
   transform: translateY(-4px);
   box-shadow: 0 0 15px rgba(0, 255, 153, 0.25);

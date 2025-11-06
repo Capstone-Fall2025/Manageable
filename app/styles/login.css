@@ -10,7 +10,7 @@
   font-family: "Inter", sans-serif;
 }
 
-/* Card */
+Card
 .login-card {
   width: 100%;
   max-width: 420px;
@@ -112,4 +112,18 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.canvas-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.login-card {
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+  background: rgba(10, 10, 10, 0.8);
 }
