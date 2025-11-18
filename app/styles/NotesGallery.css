@@ -29,39 +29,68 @@
   transform: scale(1.05);
 }
 
+/* Horizontal scroll container */
 .notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 0;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 0 2rem 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* hide scrollbar for Firefox */
+}
+.notes-grid::-webkit-scrollbar {
+  display: none; /* hide scrollbar for Chrome/Safari */
 }
 
 .note-card {
-  background: #111;
+  /* background: #111; */
+  width: 250px;
   border: 1px solid #222;
   border-radius: 16px;
   overflow: hidden;
   text-align: left;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s;
+  height: 300px; 
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 2px white;
 }
 .note-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
+/* Keep note image height consistent */
 .note-card img {
-  width: 100%;
-  height: 240px;
+  /* width: 100%;
+  height: 200px; */
   object-fit: cover;
+  flex-shrink: 0;
 }
 
+/* Uniform text zone */
 .note-meta {
+  flex: 1;
   padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position:absolute;
 }
 .note-meta h3 {
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: capitalize;
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
 }
 .note-meta span {
-  color: #aaa;
+  color: #ffffff;
   font-size: 0.85rem;
 }
 .no-notes {
@@ -70,9 +99,25 @@
   font-style: italic;
 }
 
+/* Each card wrapper */
 .note-wrapper {
+  flex: 0 0 240px; /* fixed width per card */
+  margin-left: -25px; /* overlap amount */
+  scroll-snap-align: start;
   position: relative;
+  transition: transform 0.3s ease, z-index 0.3s ease;
 }
+.note-wrapper:first-child {
+  margin-left: 0;
+}
+
+/* Hover / active pop-out effect */
+.note-wrapper:hover {
+  transform: translateY(-1px) scale(1.08);
+  z-index: 10;
+}
+
+
 
 .menu-btn {
   position: absolute;

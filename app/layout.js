@@ -1,6 +1,7 @@
 import "./globals.css";
 //import Navbar from "./components/Navbar.js";
 
+
 export const metadata = {
     title: "Manageable",
     description: " A gamified focus and task web app",

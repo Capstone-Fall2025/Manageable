@@ -1,0 +1,109 @@
+/* NoteSelector.css */
+.rev-selector {
+    margin-top: 2rem;
+}
+
+.rev-selector-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.rev-selector-header h2 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #f5f5f5;
+}
+
+.rev-selector-header p {
+    font-size: 0.15rem 0 0;
+    margin: 0.9rem;
+    color: #888;
+}
+
+.rev-brain-icon {
+  color: #04b6d1;
+}
+
+.rev-no-notes {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+
+.rev-note-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minimax(230px, 1fr));
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+
+/* a wrapper so we can do stuff to it later */
+.rev-note-wrapper {
+  position: relative;
+}
+
+/* Aesthetic base card */
+.rev-note-card {
+  background: radial-gradient(circle at top left, #0f172a, #020617);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  border: 1px solid rgb(21, 16, 16);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover border glow */
+.rev-note-card:hover {
+  box-shadow:#0f172a;
+  border-color: rgba(0, 255, 200, 0.4);
+  transform: translateY(-4px);
+}
+
+.rev-note-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rev-note-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.rev-note-icon {
+  color: white;
+}
+
+.rev-note-badge {
+  font-size: 0.75rem;
+  background: rgba(0,0,0, 0.4);
+  color:white;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.rev-note-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.rev-note-subject {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size:0.82 rem;
+}
+
+.rev-note-title {
+  margin: 0;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+}
+

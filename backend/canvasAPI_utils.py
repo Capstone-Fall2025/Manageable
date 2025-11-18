@@ -2,10 +2,10 @@ import requests
 import json
 
 # Replace this with your own Canvas API access token
-ACCESS_TOKEN = ""
+ACCESS_TOKEN = "12433~ztzFw33fD47TTBy9BUnVyTtvwhUKFeMNePYNuHufnDKwRrLcru2VPcELU4JHVzna"
 
 # Canvas course ID - Ypi can find it within the canvas url for the course
-COURSE_ID = " "
+COURSE_ID = "72847"
 
 BASE_URL = "https://american.instructure.com/api/v1"
 
