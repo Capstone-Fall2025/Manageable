@@ -38,13 +38,16 @@ export default function RevisionPage() {
 
   return (
     <div className="revision-container">
-      <h1 className="revision-title">Revision Mode</h1>
-      <button
-            className="text-gray-400 hover:text-green-400 transition"
-            onClick={() => router.push("/home")}
-            >
-            <IconArrowNarrowLeftDashed stroke={2} /> 
+      <div style={{display:'flex', alignItems:'center', gap:12}}>
+        <h1 className="revision-title">Revision Mode</h1>
+        <button
+          className="text-gray-400 hover:text-green-400 transition"
+          onClick={() => router.push("/home")}
+        >
+          <IconArrowNarrowLeftDashed stroke={2} />
         </button>
+        <button className="small-btn" onClick={() => router.push('/cooldown')}>Cool-down</button>
+      </div>
 
       {!selectedNote ? (
         <div className="note-list">

@@ -24,8 +24,8 @@ export default function CardGrid() {
           {/* <button className="school-btn" onClick={schoolPage} >School</button> */}
         </div>
 
-        <div className="card hobby">
-          <h2>Hobby</h2>
+        <div className="card cooldown" onClick={() => router.push('/cooldown')}>
+          <h2>Cool-down</h2>
         </div>
         <div className="card revision-card" onClick={() => router.push("/revision")}>
           <h3>📚 Revision Mode</h3>

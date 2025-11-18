@@ -6,6 +6,7 @@ import FloatingLetters from "../components/FloatingLetters";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import "../styles/login.css";
+import { useEffect } from "react";
 
 // function FallingElements() {
 //   const count = 25; // number of spheres
@@ -74,6 +75,11 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    // diagnostic log to confirm login page rendered
+    console.log("LoginPage rendered — google button should be present");
+  }, []);
+
   function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -133,6 +139,16 @@ export default function LoginPage() {
             Don’t have an account? <Link href="/signup">Create an account</Link>
           </div>
         </form>
+ 
+        <div style={{marginTop:12}}>
+          <button
+            type="button"
+            className="google-btn"
+            onClick={() => (window.location.href = "/api/auth/google")}
+          >
+            Sign in with Google
+          </button>
+        </div>
       </div>
     </main>
   );
