@@ -29,6 +29,8 @@ export async function GET(req) {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const redirectUri = process.env.GOOGLE_REDIRECT_URI || `${appUrl}/api/auth/google/callback`;
 
+  console.log('[oauth] callback invoked, clientId=', clientId, 'redirectUri=', redirectUri);
+
   // Exchange authorization code for tokens
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -42,7 +44,12 @@ export async function GET(req) {
     }),
   });
 
-  if (!tokenRes.ok) return NextResponse.redirect("/login?error=token_failed");
+  if (!tokenRes.ok) {
+    // log body for debugging (do NOT share client secrets publicly)
+    const bodyText = await tokenRes.text();
+    console.error('[oauth] token exchange failed', tokenRes.status, tokenRes.statusText, bodyText);
+    return NextResponse.redirect("/login?error=token_failed");
+  }
   const tokenJson = await tokenRes.json();
   const accessToken = tokenJson.access_token;
   if (!accessToken) return NextResponse.redirect("/login?error=no_token");
