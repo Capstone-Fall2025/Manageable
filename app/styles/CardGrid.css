@@ -39,7 +39,7 @@
 
 .school,
 .revision-card,
-.hobby {
+.cooldown {
   flex: 1;
   background: #111; 
   border: 1px solid #1f1f1f;
@@ -54,7 +54,7 @@
 
 .school:hover,
 .revision-card:hover,
-.hobby:hover {
+.cooldown:hover {
   transform: translateY(-4px);
   box-shadow: 0 0 15px rgba(0, 255, 153, 0.25);
 }
@@ -81,7 +81,7 @@
   }
 
   .school,
-  .hobby {
+  .cooldown {
     height: 200px;
   }
 }

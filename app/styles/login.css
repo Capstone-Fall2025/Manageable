@@ -84,6 +84,20 @@ Card
   transform: translateY(-2px);
 }
 
+/* Google button */
+.google-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: #ffffff;
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 0.6rem;
+  cursor: pointer;
+}
+.google-btn:hover { transform: translateY(-2px); }
+
 /* Footer Text */
 .login-footer {
   text-align: center;
