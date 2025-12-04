@@ -37,7 +37,7 @@ export async function POST(req) {
         if(/^#{1,6}\s*/.test(text) || /^[A-Z][A-Za-z\s&]+$/.test(text)) {
             flushBuffer();
             currentSection = text.replace(/^#{1,6}\s*/, "").trim();
-            currentSection = null;
+            currentSubsection = null;
             indentStack = [{ title: currentSection, indent }];
             continue;
         }
@@ -63,7 +63,7 @@ export async function POST(req) {
             const [term,def] = text.split(/ is /i);
             flashcards.push({
                 question: `What is ${term.trim()}?`,
-                answer: def?.trim || "",
+                answer: def?.trim() || "",
                 section: currentSubsection || currentSection
             });
             continue;
@@ -106,7 +106,7 @@ export async function POST(req) {
             continue;
         }
         //Cases for paragrpahs and long statements into summary
-        if (text.split("").length > 6){
+        if (text.length > 60){
             flashcards.push ({
                 question:`Summarize: ${text.split(" ").slice(0,5).join(" ")}....`,
                 answer: text,

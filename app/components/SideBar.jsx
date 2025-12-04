@@ -6,5 +6,5 @@ import {Page} from "../App";
 // import "../styles/Sidebar.css";
 
 import {
-    
-}
+    Home, Graduation, School, Dashboard
+} from lucide-react

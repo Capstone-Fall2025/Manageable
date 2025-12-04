@@ -4,6 +4,7 @@
   max-width: 900px;
   margin: 0 auto;
   color: #e9f6ee;
+  font-family: 'Courier New', Courier, monospace ;
 }
 .cooldown-header {
   display: flex;
