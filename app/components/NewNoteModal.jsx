@@ -2,14 +2,15 @@
 import React, { useState } from "react";
 import { createNote } from "../utils/storage";
 import { useRouter } from "next/navigation";
-// import "../styles/NewNoteModal.css";
+import "../styles/NewNoteModal.css";
 
 const IMAGE_COVERS = [
-  "/covers/green.jpg",
-  "/covers/purple.jpg",
+  // "/covers/green.jpg",
+  // "/covers/purple.jpg",
   "/covers/blue.jpg",
-  "/covers/yellow.jpg",
-  "/covers/orange.jpg",
+  // "/covers/yellow.jpg",
+  // "/covers/orange.jpg",
+  "/images/default.jpg",
 ];
 
 const TEMPLATES = ["Blank", "Cornell", "Dotted", "Code"];

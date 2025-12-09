@@ -1,0 +1,20 @@
+.modal-box {
+     /* background: #111; */
+  width: 700px;
+  border: 1px solid #222;
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s;
+  height: 650px; 
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 2px white;
+}
+
+.cover-grid {
+    width: 25%;
+    height: 2px;
+    flex-shrink: 0;
+}
+

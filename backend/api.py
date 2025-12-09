@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import datetime
-from canvaAPI_utils import get_canvas_assignments
+from canvasAPI_utils import get_canvas_assignments
 from category_task_scheduler import sort_tasks
 
 

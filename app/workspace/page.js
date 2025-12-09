@@ -1,20 +1,30 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { IconArrowNarrowLeftDashed } from '@tabler/icons-react';
 
-// --- Storage helpers ---
-function loadNotes() {
-  try {
-    const raw = localStorage.getItem("manageable_notes");
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-function saveNotes(notes) {
-  localStorage.setItem("manageable_notes", JSON.stringify(notes));
-}
+import React, { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { IconArrowNarrowLeftDashed } from "@tabler/icons-react";
+import { gsap } from "gsap";
+import "../styles/Workspace.css";
+
+import { loadNotes, saveNotes } from "../utils/storage";
+import RevisionPage from "../revision/page";
+
+// // --- Storage helpers ---
+// function loadNotes() {
+//   if (typeof window === "undefined") return [];
+//   try {
+//     const raw = localStorage.getItem("manageable_notes");
+//     return raw ? JSON.parse(raw) : [];
+//   } catch {
+//     return [];
+//   }
+// }
+
+// function saveNotes(notes) {
+//   if (typeof window === "undefined") return;
+//   localStorage.setItem("manageable_notes", JSON.stringify(notes));
+// }
+
 function uid() {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
@@ -22,17 +32,63 @@ function uid() {
 export default function Workspace() {
   const router = useRouter();
   const params = useSearchParams();
-  const editingId = params.get("id"); // optional ?id=<noteId> to edit an existing note
+  const editingId = params.get("id"); // optional ?id=<noteId>
 
+  const [notes, setNotes] = useState([]);
+  const [noteId, setNoteId] = useState(null);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [noteId, setNoteId] = useState(editingId || null);
   const [lastSaved, setLastSaved] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [cover, setCover] = useState(null);
 
-  // Load existing note if ?id= provided
+
+  const rootRef = useRef(null);
+  const sidebarRef = useRef(null);
+  const editorRef = useRef(null);
+  const debounceRef = useRef(null);
+
+  // Entrance animation with GSAP
+  useEffect(() => {
+    if (!rootRef.current) return;
+
+    const tl = gsap.timeline();
+    tl.from(rootRef.current, {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    })
+      .from(
+        sidebarRef.current,
+        {
+          x: -40,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power3.out",
+        },
+        "-=0.3"
+      )
+      .from(
+        editorRef.current,
+        {
+          y: 24,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  // Initial load of all notes + choose current note
   useEffect(() => {
     const all = loadNotes();
+    setNotes(all);
+
     if (editingId) {
       const n = all.find((x) => x.id === editingId);
       if (n) {
@@ -40,38 +96,102 @@ export default function Workspace() {
         setTitle(n.title || "");
         setBody(n.content || "");
         setLastSaved(n.updatedAt || n.createdAt || null);
+        return;
       }
+    }
+
+    // If no ?id or not found, select first note if exists
+    if (all.length > 0) {
+      const first = all[0];
+      setNoteId(first.id);
+      setTitle(first.title || "");
+      setBody(first.content || "");
+      setLastSaved(first.updatedAt || first.createdAt || null);
     }
   }, [editingId]);
 
-  // Debounced autosave while typing
-  const debounceRef = useRef(null);
+  //Debounced autosave
   useEffect(() => {
-    // don’t autosave if both empty
-    if (!title.trim() && !body.trim()) return;
+    if (!title.trim() && !body.trim()) return; // nothing to save
+
     setSaving(true);
     if (debounceRef.current) clearTimeout(debounceRef.current);
+
     debounceRef.current = setTimeout(() => {
       const all = loadNotes();
       const now = new Date().toISOString();
+      let updated = [...all];
 
       if (noteId) {
-        // update existing
-        const idx = all.findIndex((n) => n.id === noteId);
+        const idx = updated.findIndex((n) => n.id === noteId);
         if (idx !== -1) {
-          all[idx] = {
-            ...all[idx],
+          updated[idx] = {
+            ...updated[idx],
             title: title.trim() || "Untitled note",
             content: body,
             updatedAt: now,
           };
-          saveNotes(all);
-          setLastSaved(now);
-          setSaving(false);
-          return;
+        } else {
+          const newNote = {
+            id: noteId,
+            title: title.trim() || "Untitled note",
+            content: body,
+            createdAt: now,
+            updatedAt: now,
+          };
+          updated = [newNote, ...updated];
         }
+      } else {
+        const newId = uid();
+        const newNote = {
+          id: newId,
+          title: title.trim() || "Untitled note",
+          content: body,
+          createdAt: now,
+          updatedAt: now,
+        };
+        updated = [newNote, ...updated];
+        setNoteId(newId);
       }
-      // create new (autosave will create new draft if no id)
+
+      saveNotes(updated);
+      setNotes(updated);
+      setLastSaved(now);
+      setSaving(false);
+    }, 800);
+
+    return () => clearTimeout(debounceRef.current);
+  }, [title, body, noteId]);
+
+  // Explicit Save
+  function handleSaveExplicit() {
+    if (!title.trim() && !body.trim()) return;
+    const all = loadNotes();
+    const now = new Date().toISOString();
+    let updated = [...all];
+
+    if (noteId) {
+      const idx = updated.findIndex((n) => n.id === noteId);
+      if (idx !== -1) {
+        updated[idx] = {
+          ...updated[idx],
+          title: title.trim() || "Untitled note",
+          content: body,
+          cover,
+          updatedAt: now,
+        };
+      } else {
+        const newNote = {
+          id: uid(),
+          title: "Untitled note",
+          content: "",
+          cover,
+          createdAt: now,
+          updatedAt: now,
+        };
+        updated = [newNote, ...updated];
+      }
+    } else {
       const newId = uid();
       const newNote = {
         id: newId,
@@ -80,48 +200,16 @@ export default function Workspace() {
         createdAt: now,
         updatedAt: now,
       };
-      saveNotes([newNote, ...all]);
+      updated = [newNote, ...updated];
       setNoteId(newId);
-      setLastSaved(now);
-      setSaving(false);
-    }, 800); // 800ms debounce
-
-    return () => clearTimeout(debounceRef.current);
-  }, [title, body, noteId]);
-
-  function handleSaveExplicit() {
-    if (!title.trim() && !body.trim()) return; // nothing to save
-    const all = loadNotes();
-    const now = new Date().toISOString();
-
-    if (noteId) {
-      const idx = all.findIndex((n) => n.id === noteId);
-      if (idx !== -1) {
-        all[idx] = {
-          ...all[idx],
-          title: title.trim() || "Untitled note",
-          content: body,
-          updatedAt: now,
-        };
-        saveNotes(all);
-        setLastSaved(now);
-        return;
-      }
     }
-    // Save as new
-    const newId = uid();
-    const newNote = {
-      id: newId,
-      title: title.trim() || "Untitled note",
-      content: body,
-      createdAt: now,
-      updatedAt: now,
-    };
-    saveNotes([newNote, ...all]);
-    setNoteId(newId);
+
+    saveNotes(updated);
+    setNotes(updated);
     setLastSaved(now);
   }
 
+  // Save as new copy
   function handleSaveAsNew() {
     const all = loadNotes();
     const now = new Date().toISOString();
@@ -133,92 +221,269 @@ export default function Workspace() {
       createdAt: now,
       updatedAt: now,
     };
-    saveNotes([duplicate, ...all]);
+    const updated = [duplicate, ...all];
+    saveNotes(updated);
+    setNotes(updated);
     setNoteId(newId);
     setLastSaved(now);
+  }
+
+  // Create brand new empty note
+  function handleCreateNote() {
+    const now = new Date().toISOString();
+    const newNote = {
+      id: uid(),
+      title: "Untitled note",
+      content: "",
+      createdAt: now,
+      updatedAt: now,
+    };
+    const updated = [newNote, ...notes];
+    saveNotes(updated);
+    setNotes(updated);
+    setNoteId(newNote.id);
+    setTitle(newNote.title);
+    setBody("");
+    setLastSaved(now);
+  }
+
+  // Select note from sidebar
+  function handleSelectNote(id) {
+    const n = notes.find((note) => note.id === id);
+    if (!n) return;
+    setNoteId(n.id);
+    setTitle(n.title || "");
+    setBody(n.content || "");
+    setLastSaved(n.updatedAt || n.createdAt || null);
+  }
+
+  //Delete note
+  function handleDeleteNote(id) {
+    const filtered = notes.filter((n) => n.id !== id);
+    saveNotes(filtered);
+    setNotes(filtered);
+
+    if (noteId === id) {
+      if (filtered.length > 0) {
+        const first = filtered[0];
+        setNoteId(first.id);
+        setTitle(first.title || "");
+        setBody(first.content || "");
+        setLastSaved(first.updatedAt || first.createdAt || null);
+      } else {
+        setNoteId(null);
+        setTitle("");
+        setBody("");
+        setLastSaved(null);
+      }
+    }
   }
 
   function handleClear() {
     setTitle("");
     setBody("");
-    // keep noteId to keep editing same record (or reset if you prefer)
-    // setNoteId(null);
+  }
+
+  function handleRevisionPage() {
+    router.push("/revision");
   }
 
   function handleLockIn() {
     router.push("/lockin");
   }
 
+  function formatTimeLabel(value) {
+    if (!value) return "Not saved yet";
+    const d = new Date(value);
+    return `Saved • ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  }
+
+  function formatSidebarDate(value) {
+    if (!value) return "";
+    const d = new Date(value);
+    const now = new Date();
+
+    const diffMs = now.getTime() - d.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  }
+
+  function getPreview(content) {
+    const firstLine = (content || "").split("\n").find((line) => line.trim()) || "";
+    if (!firstLine) return "No content yet";
+    return firstLine.length > 50 ? firstLine.slice(0, 50) + "..." : firstLine;
+  }
+
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center p-8">
-      <div className="w-full max-w-3xl flex flex-col gap-3">
-        {/* Header row: Save status + actions */}
-        <div className="flex items-center justify-between text-sm text-gray-400">
-          <div>
-            {saving ? "Saving…" : lastSaved ? `Saved • ${new Date(lastSaved).toLocaleTimeString()}` : "—"}
-          </div>
-          <div className="flex gap-2">
-            <button
-              className="px-3 py-1.5 rounded-md bg-gray-800 hover:bg-gray-700 transition"
-              onClick={handleSaveExplicit}
-              title="Save"
-            >
-              Save
-            </button>
-            <button
-              className="px-3 py-1.5 rounded-md bg-gray-800 hover:bg-gray-700 transition"
-              onClick={handleSaveAsNew}
-              title="Save as a new copy"
-            >
-              Save as New
-            </button>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between mb-3">
-            <button
-            className="text-gray-400 hover:text-green-400 transition"
+    <main ref={rootRef} className="workspace-root">
+      <div className="workspace-inner">
+        {/* Top bar */}
+        <header className="ws-topbar">
+          <button
+            className="ws-back-btn"
             onClick={() => router.push("/notes")}
-            >
-            <IconArrowNarrowLeftDashed stroke={2} /> 
-            </button>
-        <span className="text-sm text-gray-500">
-            {lastSaved ? `Saved • ${new Date(lastSaved).toLocaleTimeString()}` : ""}
-        </span>
-        </div>
-
-
-        <input
-          type="text"
-          placeholder="Untitled note"
-          className="w-full text-2xl font-semibold bg-transparent border-b border-gray-700 outline-none focus:border-green-400 pb-2"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <textarea
-          placeholder="Let's get on with it…"
-          className="w-full min-h-[70vh] resize-none bg-transparent text-lg outline-none leading-relaxed"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <div className="flex justify-end mt-6 gap-3">
-          <button
-            className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md transition"
-            onClick={handleClear}
           >
-            Clear
+            <IconArrowNarrowLeftDashed stroke={2} />
+            <span>Back to Notes</span>
           </button>
 
-          <button
-            className="px-4 py-2 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-md transition"
-            onClick={handleLockIn}
-          >
-            Lock In Mode
-          </button>
+          <div className="ws-status">
+            {saving ? "Saving…" : formatTimeLabel(lastSaved)}
+          </div>
+        </header>
+
+        {/* Main layout */}
+        <div className="ws-layout">
+          {/* Sidebar */}
+          <aside ref={sidebarRef} className="ws-sidebar">
+            <div className="ws-sidebar-header">
+              <div>
+                <h1 className="ws-sidebar-title">Notes</h1>
+                <p className="ws-sidebar-subtitle">
+                  {notes.length === 1 ? "1 note" : `${notes.length} notes`}
+                </p>
+              </div>
+              <button
+                className="ws-icon-btn"
+                onClick={handleCreateNote}
+                title="New note"
+              >
+                ＋
+              </button>
+            </div>
+
+            <div className="ws-divider" />
+
+            <div className="ws-notes-list">
+              {notes.length === 0 && (
+                <div className="ws-empty-state">
+                  <p>No notes yet.</p>
+                  <p className="ws-empty-sub">Create your first note to get started.</p>
+                </div>
+              )}
+
+              {notes.map((note) => (
+                <div
+                  key={note.id}
+                  className={
+                    "ws-note-item" +
+                    (note.id === noteId ? " ws-note-item--active" : "")
+                  }
+                  onClick={() => handleSelectNote(note.id)}
+                >
+                  <div className="ws-note-item-main">
+                    <div className="ws-note-title-row">
+                      <span className="ws-note-title">
+                        {note.title || "Untitled note"}
+                      </span>
+                      <span className="ws-note-date">
+                        {formatSidebarDate(note.updatedAt || note.createdAt)}
+                      </span>
+                    </div>
+                    <p className="ws-note-preview">{getPreview(note.content)}</p>
+                  </div>
+                  <button
+                    className="ws-delete-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteNote(note.id);
+                    }}
+                    title="Delete note"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          </aside>
+
+          {/* Editor */}
+          <section ref={editorRef} className="ws-editor">
+            {noteId ? (
+              <>
+                <div className="ws-editor-toolbar">
+                  <div className="ws-editor-meta">
+                    <span className="ws-editor-label">Workspace</span>
+                    <span className="ws-editor-dot">•</span>
+                    <span className="ws-editor-sublabel">
+                      {formatTimeLabel(lastSaved)}
+                    </span>
+                  </div>
+
+                  <div className="ws-editor-actions">
+                    <button
+                      className="ws-btn ws-btn-ghost"
+                      onClick={handleSaveExplicit}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="ws-btn ws-btn-ghost"
+                      onClick={handleSaveAsNew}
+                    >
+                      Save as New
+                    </button>
+                    <button
+                      className="ws-btn ws-btn-primary"
+                      onClick={handleLockIn}
+                    >
+                      Lock In Mode
+                    </button>
+                    <button
+                        className="ws-btn ws-btn-ghost"
+                        onClick={handleRevisionPage}
+                    >
+                    Revise This
+                    </button>
+                  </div>
+                </div>
+
+                <div className="ws-editor-body">
+                  <input
+                    type="text"
+                    placeholder="Untitled note"
+                    className="ws-title-input"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+
+                  <textarea
+                    placeholder="Let's get on with it…"
+                    className="ws-body-textarea"
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                  />
+                </div>
+
+                <div className="ws-editor-footer">
+                  <button
+                    className="ws-btn ws-btn-ghost"
+                    onClick={handleClear}
+                  >
+                    Clear
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="ws-editor-empty">
+                <p className="ws-empty-main">No note selected</p>
+                <button
+                  className="ws-btn ws-btn-primary"
+                  onClick={handleCreateNote}
+                >
+                  Create New Note
+                </button>
+              </div>
+            )}
+          </section>
         </div>
       </div>
     </main>
   );
 }
+

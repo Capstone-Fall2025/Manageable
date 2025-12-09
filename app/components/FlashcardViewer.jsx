@@ -10,7 +10,6 @@ export default function FlashcardViewer({ flashcards, noteTitle, onBack }) {
     return (
       <div className="flashcard-empty">
         <p>No flashcards available.</p>
-        <button onClick={onBack}>← Back</button>
       </div>
     );
 
@@ -18,7 +17,6 @@ export default function FlashcardViewer({ flashcards, noteTitle, onBack }) {
 
   return (
     <div className="flashcard-viewer">
-      <button className="back-btn" onClick={onBack}>← Back</button>
       <h2 className="note-title">{noteTitle}</h2>
 
       <div

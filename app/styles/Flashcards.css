@@ -9,16 +9,17 @@
 .note-title {
   margin-bottom: 1.5rem;
   font-size: 1.4rem;
-  font-weight: 600;
-  color: #00ff99;
+  font-weight: 150;
+  color: #f4f5f4;
 }
 
 .flashcard {
-  width: 360px;
-  height: 200px;
+  width: 700px;
+  height: 450px;
   perspective: 1000px;
   position: relative;
   cursor: pointer;
+  
 }
 
 .flashcard .front,
@@ -35,10 +36,12 @@
   font-weight: 500;
   backface-visibility: hidden;
   transition: transform 0.6s ease;
-  box-shadow: 0 0 12px rgba(0, 255, 120, 0.2);
   background-color: #111;
+  
 }
 
+
+  
 .flashcard .back {
   transform: rotateY(180deg);
   background-color: #222;
