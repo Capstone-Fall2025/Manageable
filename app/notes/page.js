@@ -44,6 +44,8 @@ export default function NotesGallery() {
         </button>
       </header>
 
+
+
       <section className="notes-grid">
         {notes.map((n) => (
           <div key={n.id} className="relative note-wrapper">

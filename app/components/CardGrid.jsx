@@ -28,7 +28,7 @@ export default function CardGrid() {
           <h2>Cool-down</h2>
         </div>
         <div className="card revision-card" onClick={() => router.push("/revision")}>
-          <h3>📚 Revision Mode</h3>
+          <h3> Revision Mode</h3>
         </div>
       </div>
     </section>

@@ -1,25 +1,132 @@
-.navbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    color: rgb(221, 221, 221);
-}
+/* existing .navbar styles can stay */
 
-.nav-btn,
-.nav-profile {
+/* hamburger button */
+.nav-btn {
+    background: none;
+    border: none;
     font-size: 1.5rem;
+    color: #e5e7eb;
     cursor: pointer;
-    transition: 0.3s;
-}
+  }
+  
+  /* sidebar container */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;          /* hidden by default */
+    width: 260px;
+    height: 100vh;
+    background: #020617;   /* very dark */
+    border-right: 1px solid #1f2937;
+    padding: 1.5rem 1rem;
+    transition: left 0.25s ease;
+    z-index: 40;
+  }
+  
+  /* when open, slide into view */
+  .sidebar-open {
+    left: 0;
+  }
+  
+  .sidebar-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #9ca3af;
+    cursor: pointer;
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    margin-top: 1.5rem;
+    padding: 0;
+  }
+  
+  .sidebar-menu li {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    cursor: pointer;
+  }
+  
+  .sidebar-menu li:hover {
+    color: #22d3ee;
+  }
 
-.nav-btn:hover,
-.nav-profile:hover {
-    color:white;
-}
-
-.nav-title {
-    font-size: 1.8rem;
+  
+  /* NAVBAR CONTAINER */
+.navbar {
+    position: fixed;            /* stays at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    padding: 0 1rem;
+  
+    background: transparent;     /* or black if you want */
+    z-index: 50;
+  }
+  
+  /* HAMBURGER */
+  .nav-btn {
+    margin-left: 0;              /* ensure it's left-aligned */
+    font-size: 1.75rem;
+    color: white;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  
+  /* APP TITLE */
+  .nav-title {
+    color: white;
     font-weight: bold;
-}
+    cursor: pointer;
+    margin-left: 0.5rem;        /* small spacing from hamburger */
+  }
+  
+  /* PROFILE ICON */
+  .nav-profile {
+    color: white;
+    margin-right: 0.5rem;
+  }
+  
+
+
+/* -------- Beautiful Gradient Title -------- */
+
+.fancy-title {
+    cursor: pointer;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-size: 1.9rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-gradient {
+    background: linear-gradient(90deg, #ff7bd5, #7aa2ff, #6dffb8);
+    background-size: 200% 200%;
+    animation: titleGradientMove 6s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Subtle animated gradient */
+  @keyframes titleGradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
