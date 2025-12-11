@@ -2,7 +2,7 @@ import requests
 import json
 
 # Replace this with your own Canvas API access token
-ACCESS_TOKEN = "12433~yZZumDVELrNTQh4XRmr7V2C3RhJrP4UM2cVGYAnNNEFXK6UVHwcvALu32hMt4NMB"
+ACCESS_TOKEN = ""
 
 # Canvas course ID - Ypi can find it within the canvas url for the course
 COURSE_ID = "73977"

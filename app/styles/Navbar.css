@@ -96,3 +96,37 @@
     margin-right: 0.5rem;
   }
   
+
+
+/* -------- Beautiful Gradient Title -------- */
+
+.fancy-title {
+    cursor: pointer;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-size: 1.9rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-gradient {
+    background: linear-gradient(90deg, #ff7bd5, #7aa2ff, #6dffb8);
+    background-size: 200% 200%;
+    animation: titleGradientMove 6s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Subtle animated gradient */
+  @keyframes titleGradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  

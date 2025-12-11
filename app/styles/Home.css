@@ -342,4 +342,653 @@
     font-size: 0.85rem;
     color: #9ca3af;
   }
+
+  /* LAYOUT WRAPPER */
+
+.home-shell {
+    min-height: 100vh;
+    background: #050816;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* NavBar stays as-is (Navbar.css owns it) */
+  
+  .home-main {
+    max-width: 1400px;       /* more horizontal room */
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 2.25rem 2.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  
+  /* HERO ROW */
+  
+  .hero-row {
+    display: grid;
+    grid-template-columns: minmax(0, 2.7fr) minmax(0, 1.6fr);
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 900px) {
+    .hero-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  
+  /* Left hero card */
+  
+  .hero-card {
+    background: radial-gradient(circle at top left, #0f172a, #020617);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(30, 64, 175, 0.6);
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.95);
+    padding: 1.4rem 1.4rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+  
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  
+  .hero-text {
+    max-width: 60%;
+  }
+  
+  .hero-kicker {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #a5b4fc;
+    margin-bottom: 0.25rem;
+  }
+  
+  .hero-title {
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: #f9fafb;
+    margin-bottom: 0.25rem;
+  }
+  
+  .hero-date {
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+  
+  /* Cat area */
+  
+  .hero-cat-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 220px;
+  }
+  
+  .cat-character {
+    border: 1px solid #1f2937;
+    background: radial-gradient(circle at 30% 30%, #fefce8, #fbbf24);
+    border-radius: 1.2rem;
+    padding: 0.55rem;
+    cursor: pointer;
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.9);
+  }
+  
+  .cat-character:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.95);
+  }
+  
+  .cat-face {
+    position: relative;
+    width: 70px;
+    height: 60px;
+    background: #facc15;
+    border-radius: 20px;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+  }
+  
+  /* ears */
+  
+  .cat-ear {
+    position: absolute;
+    width: 22px;
+    height: 20px;
+    background: #facc15;
+    border-radius: 8px 8px 0 0;
+    top: -12px;
+  }
+  
+  .cat-ear-left {
+    left: 6px;
+    transform: rotate(-8deg);
+  }
+  
+  .cat-ear-right {
+    right: 6px;
+    transform: rotate(8deg);
+  }
+  
+  /* eyes */
+  
+  .cat-eyes {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cat-eye {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: #111827;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.35);
+  }
+  
+  /* mouth + whiskers */
+  
+  .cat-mouth {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 14px;
+    border-radius: 0 0 999px 999px;
+    border-bottom: 3px solid #111827;
+  }
+  
+  .cat-whiskers {
+    position: absolute;
+    width: 26px;
+    height: 1px;
+    border-top: 2px solid rgba(15, 23, 42, 0.7);
+    top: 35px;
+  }
+  
+  .cat-whiskers-left {
+    left: -16px;
+  }
+  
+  .cat-whiskers-right {
+    right: -16px;
+  }
+  
+  /* happy pulse */
+  
+  .cat-happy .cat-face {
+    animation: cat-bounce 0.5s ease;
+  }
+  
+  .cat-happy .cat-mouth {
+    height: 18px;
+  }
+  
+  @keyframes cat-bounce {
+    0% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-4px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  /* speech bubble */
+  
+  .cat-bubble {
+    position: relative;
+    max-width: 220px;
+    font-size: 0.7rem;
+    line-height: 1.3;
+    color: #e5e7eb;
+    background: rgba(15, 23, 42, 0.96);
+    border-radius: 0.75rem;
+    padding: 0.42rem 0.6rem;
+    border: 1px solid rgba(55, 65, 81, 0.9);
+  }
+  
+  .cat-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 18px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.96) transparent transparent transparent;
+  }
+  
+  .cat-caption {
+    font-size: 0.7rem;
+    color: #9ca3af;
+  }
+  
+  /* Hero stats row */
+  
+  .hero-stats {
+    margin-top: 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  
+  @media (max-width: 900px) {
+    .hero-stats {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  
+    .hero-text {
+      max-width: 100%;
+    }
+  }
+  
+  .hero-stat-card {
+    background: rgba(15, 23, 42, 0.9);
+    border-radius: 1.1rem;
+    border: 1px solid rgba(30, 64, 175, 0.4);
+    padding: 0.8rem 0.9rem;
+  }
+  
+  .hero-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #9ca3af;
+  }
+  
+  .hero-stat-main {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+  }
+  
+  .hero-stat-number {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #f9fafb;
+  }
+  
+  .hero-stat-sublabel {
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+  
+  .hero-stat-footnote {
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
+    color: #9ca3af;
+  }
+  
+  .progress-bar,
+  .xp-bar {
+    margin-top: 0.35rem;
+    width: 100%;
+    height: 0.3rem;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.9);
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #22c55e, #a3e635);
+    border-radius: inherit;
+  }
+  
+  .xp-fill {
+    height: 100%;
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    border-radius: inherit;
+  }
+  
+  /* Right hero column – category rings */
+  
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .category-ring-card {
+    background: #020617;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(30, 64, 175, 0.7);
+    padding: 0.7rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+  }
+  
+  .ring-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .ring {
+    width: 100px;
+    height: 100px;
+    transform: rotate(-90deg);
+  }
+  
+  
+  .ring-bg {
+    fill: none;
+    stroke: rgba(55, 65, 81, 0.9);
+    stroke-width: 3;
+  }
+  
+  .ring-fg {
+    fill: none;
+    stroke: #22c55e;
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f9fafb;
+  }
+  
+  
+  .ring-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ring-title {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #e5e7eb;
+  }
+  
+  .ring-sub {
+    font-size: 0.7rem;
+    color: #9ca3af;
+  }
+  
+  /* LOWER GRID: tasks + roadmap */
+  
+  .lower-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 2.1fr); /* roadmap wider */
+    gap: 1.75rem;
+  }
+  
+  
+  @media (max-width: 900px) {
+    .lower-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  
+  .panel-card {
+    background: #020617;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(30, 64, 175, 0.7);
+    padding: 1rem;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+  }
+  
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .panel-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f9fafb;
+  }
+  
+  .panel-sub {
+    font-size: 0.7rem;
+    color: #9ca3af;
+  }
+  
+  .panel-pill {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(79, 70, 229, 0.65);
+    color: #a5b4fc;
+    background: rgba(30, 64, 175, 0.15);
+  }
+  
+  .panel-empty {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 0.6rem;
+  }
+  
+  /* Task list */
+  
+  .task-list {
+    margin-top: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    max-height: 660px;
+    overflow-y: auto;
+  }
+  
+  .task-row {
+    display: flex;
+    gap: 0.55rem;
+    padding: 0.5rem 0.55rem;
+    border-radius: 0.95rem;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(30, 64, 175, 0.5);
+  }
+  
+  .task-check {
+    margin-top: 0.25rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    border: 1px solid #64748b;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .task-check-checked {
+    border-color: #a5b4fc;
+    background: #6366f1;
+  }
+  
+  .task-check-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #f9fafb;
+  }
+  
+  .task-main {
+    flex: 1;
+  }
+  
+  .task-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e5e7eb;
+  }
+  
+  .task-title-done {
+    text-decoration: line-through;
+    color: #6b7280;
+  }
+  
+  .task-meta {
+    margin-top: 0.15rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: #9ca3af;
+  }
+  
+  .pill {
+    padding: 0.06rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid rgba(75, 85, 99, 0.9);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+  
+  .pill-canvas {
+    border-color: rgba(129, 140, 248, 0.9);
+    background: rgba(79, 70, 229, 0.15);
+    color: #c7d2fe;
+  }
+  
+  /* Roadmap grid */
+  
+  .roadmap-grid {
+    margin-top: 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.6rem;                   /* more spacing between days */
+  }
+  
+  
+  @media (max-width: 900px) {
+    .roadmap-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  
+  .roadmap-day {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  
+  .roadmap-day-label {
+    font-size: 0.8rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #e5e7eb;
+  }
+  
+  
+  .roadmap-column {
+    min-height: 210px;             /* taller columns */
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px dashed rgba(55, 65, 81, 0.9);
+    padding: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  
+  
+  .roadmap-empty-slot {
+    font-size: 0.7rem;
+    color: #4b5563;
+    text-align: center;
+    margin-top: 0.8rem;
+  }
+  
+  .roadmap-block {
+    border-radius: 0.8rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+  
+  
+  .roadmap-block-work {
+    background: linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.25),
+      rgba(59, 130, 246, 0.55)
+    );
+    border: 1px solid rgba(59, 130, 246, 0.8);
+    color: #e5e7eb;
+  }
+  
+  .roadmap-block-break {
+    background: rgba(22, 163, 74, 0.16);
+    border: 1px solid rgba(34, 197, 94, 0.8);
+    color: #bbf7d0;
+  }
+  
+  .roadmap-block-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .roadmap-block-cat {
+    font-size: 0.8rem;
+  }
+  
+  /* Scrollbar tiny tweak for dark theme */
+  
+  .task-list::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .task-list::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 999px;
+  }
+  
+  .roadmap-block-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    max-width: 100%;
+  }
+  
+  .roadmap-block-title {
+    font-weight: 500;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;      /* allow multiple lines */
+  }
+  
+  .roadmap-block-time {
+    font-size: 0.65rem;
+    opacity: 0.9;
+  }
   

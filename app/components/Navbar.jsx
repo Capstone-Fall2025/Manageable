@@ -23,9 +23,10 @@ export default function NavBar() {
           ☰
         </button>
 
-        <h1 className="nav-title" onClick={() => goTo("/")}>
-          Manageable
+        <h1 className="nav-title fancy-title" onClick={() => goTo("/")}>
+          <span className="title-gradient">Manageable</span>
         </h1>
+
 
         <div className="nav-profile">pp</div>
       </nav>
@@ -51,3 +52,4 @@ export default function NavBar() {
     </>
   );
 }
+
