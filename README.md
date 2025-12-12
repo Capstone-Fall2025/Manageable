@@ -8,7 +8,40 @@ steps to run locally:
 
 Demo: https://youtu.be/-Kla6kXHFe4?si=f6t6dNVcDx70VC4B
 
+# File Structure 
 
+```mermaid
+flowchart TD
+  root["ManageableF/"]
+
+  root --> app["app/ — Next.js frontend (app router)"]
+  app --> app_routes["routed views"]
+  app_routes --> home["home/ — dashboard"]
+  app_routes --> tasks["tasks/ — unified task inbox"]
+  app_routes --> login["login/, signin/, signup/ — auth flows"]
+  app_routes --> school["school/ & notes/ — notes hub"]
+  app_routes --> workspace["workspace/ — per-note editor"]
+  app_routes --> cooldown["cooldown/ — post-study reflection"]
+  app_routes --> revision["revision/ — flashcards & session flow"]
+
+  app --> app_shared["shared UI & logic"]
+  app_shared --> components["components/ — reusable UI pieces"]
+  app_shared --> utils["utils/ — helpers (notes, tasks, flashcards)"]
+  app_shared --> styles["styles/ & globals.css — styling"]
+  app_shared --> api_routes["api/ — Next.js API routes (flashcards)"]
+  app_shared --> layout["layout.js & page.js — root layout/landing"]
+
+  root --> backend["backend/ — Flask API"]
+  backend --> api_py["api.py — route definitions"]
+  backend --> canvas_utils["canvasAPI_utils.py — Canvas integration"]
+  backend --> scheduler["category_task_scheduler.py — task duration & roadmap"]
+  backend --> oauth["oauth_canvas.py — OAuth helper"]
+  backend --> reqs["requirements.txt"]
+
+  root --> public["public/ — static assets (images, fonts, covers)"]
+  root --> docs_dir["docs/ — project reports & diagrams"]
+  root --> config["config files — README.md, package*.json, eslint/postcss configs"]
+```
 --------------------
 <<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
