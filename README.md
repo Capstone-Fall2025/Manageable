@@ -1,10 +1,13 @@
 -------------------
-steps:
+steps to run locally:
 1. clone repository
 2. run: npm install webpack webpack-cli webpack-dev-server --save-dev
 3. from /frontend run: npm run dev
 4. it will give you an option to view local or via network
 5. from /backed run python api.py
+
+Demo: https://youtu.be/-Kla6kXHFe4?si=f6t6dNVcDx70VC4B
+
 
 --------------------
 <<<<<<< HEAD
